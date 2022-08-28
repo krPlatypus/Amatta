@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'com.amatta'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.amatta.Bot'
+    }
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+dependencies {
+    implementation('net.dv8tion:JDA:5.0.0-alpha.9'){
+        exclude module: 'opus-java'
+    }
+}
